@@ -1,0 +1,37 @@
+capybara-tamagotchi/
+├── README.md
+├── index.html
+├── package.json
+├── vite.config.js
+├── tailwind.config.js
+├── postcss.config.js
+├── public/
+│   ├── favicon.ico
+│   ├── capybara-icons/
+│   │   ├── icon-192x192.png
+│   │   └── icon-512x512.png
+│   └── manifest.json
+└── src/
+    ├── main.jsx
+    ├── App.jsx
+    ├── index.css
+    ├── components/
+    │   ├── CapybaraDisplay.jsx
+    │   ├── StatBar.jsx
+    │   └── ActionButton.jsx
+    ├── hooks/
+    │   └── useGameLogic.js
+    ├── context/
+    │   └── GameContext.jsx
+    ├── assets/
+    │   ├── sounds/
+    │   │   ├── eat.mp3
+    │   │   ├── play.mp3
+    │   │   └── sleep.mp3
+    │   └── images/
+    │       ├── capy-happy.svg
+    │       ├── capy-okay.svg
+    │       ├── capy-sad.svg
+    │       └── capy-sleeping.svg
+    └── utils/
+        └── storageUtils.js

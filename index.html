@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <meta name="theme-color" content="#FEF3C7" />
+    <meta name="description" content="Capy-gotchi: A virtual capybara pet game" />
+    <link rel="apple-touch-icon" href="/capybara-icons/icon-192x192.png" />
+    <link rel="manifest" href="/manifest.json" />
+    <title>Capy-gotchi</title>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
+    <script>
+      // Register service worker for PWA capabilities
+      if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+          navigator.serviceWorker.register('/sw.js').catch(err => {
+            console.error('Service worker registration failed:', err);
+          });
+        });
+      }
+      
+      // Prevent scrolling/zooming for better mobile experience
+      document.addEventListener('touchmove', function(e) {
+        if (e.scale !== 1) {
+          e.preventDefault();
+        }
+      }, { passive: false });
+    </script>
+  </body>
+</html>
