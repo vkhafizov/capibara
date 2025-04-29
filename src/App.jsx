@@ -3,7 +3,7 @@ import CapybaraDisplay from './components/CapybaraDisplay';
 import StatBar from './components/StatBar';
 import ActionButton from './components/ActionButton';
 import { GameContext } from './context/GameContext';
-import { Cookie, Gamepad2, Droplets, Moon } from 'lucide-react';
+import { Cookie, Gamepad2, Droplets, Moon, Heart } from 'lucide-react';
 
 function App() {
   const { 
