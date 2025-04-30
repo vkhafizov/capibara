@@ -2,9 +2,13 @@ import { useState } from 'react';
 import { useContext } from 'react';
 import { GameContext } from '../context/GameContext';
 import { Menu, X, RotateCcw, PieChart, Moon, Share2, Info } from 'lucide-react';
+import StatsModal from './StatsModal';
+import AboutModal from './AboutModal';
 
 export default function BurgerMenu() {
   const [isOpen, setIsOpen] = useState(false);
+  const [showStatsModal, setShowStatsModal] = useState(false);
+  const [showAboutModal, setShowAboutModal] = useState(false);
   const { resetGame } = useContext(GameContext);
   
   const toggleMenu = () => {
@@ -13,6 +17,16 @@ export default function BurgerMenu() {
   
   const closeMenu = () => {
     setIsOpen(false);
+  };
+  
+  const openStatsModal = () => {
+    setShowStatsModal(true);
+    closeMenu();
+  };
+  
+  const openAboutModal = () => {
+    setShowAboutModal(true);
+    closeMenu();
   };
   
   return (
@@ -44,24 +58,29 @@ export default function BurgerMenu() {
           {/* Header */}
           <div className="flex justify-between items-center p-4 border-b border-amber-200 mt-3">
             <h2 className="text-xl font-bold text-amber-800">Menu</h2>
-            
           </div>
           
           {/* Menu Items */}
           <div className="flex-1 overflow-y-auto p-4">
             <ul className="space-y-2">
               <li>
-              <button className="flex items-center w-full p-3 rounded-lg hover:bg-amber-200 transition-colors" onClick={() => {
-              resetGame();
-              closeMenu();
-              }}>
-              <RotateCcw size={20} className="mr-3" />
-              <span>New Game</span>
-              </button>
+                <button 
+                  className="flex items-center w-full p-3 rounded-lg hover:bg-amber-200 transition-colors" 
+                  onClick={() => {
+                    resetGame();
+                    closeMenu();
+                  }}
+                >
+                  <RotateCcw size={20} className="mr-3" />
+                  <span>New Game</span>
+                </button>
               </li>
               
               <li>
-                <button className="flex items-center w-full p-3 rounded-lg hover:bg-amber-200 transition-colors">
+                <button 
+                  className="flex items-center w-full p-3 rounded-lg hover:bg-amber-200 transition-colors"
+                  onClick={openStatsModal}
+                >
                   <PieChart size={20} className="mr-3" />
                   <span>Stats</span>
                 </button>
@@ -82,7 +101,10 @@ export default function BurgerMenu() {
               </li>
               
               <li>
-                <button className="flex items-center w-full p-3 rounded-lg hover:bg-amber-200 transition-colors">
+                <button 
+                  className="flex items-center w-full p-3 rounded-lg hover:bg-amber-200 transition-colors"
+                  onClick={openAboutModal}
+                >
                   <Info size={20} className="mr-3" />
                   <span>About</span>
                 </button>
@@ -96,6 +118,18 @@ export default function BurgerMenu() {
           </div>
         </div>
       </div>
+      
+      {/* Stats Modal */}
+      <StatsModal 
+        isOpen={showStatsModal} 
+        onClose={() => setShowStatsModal(false)} 
+      />
+      
+      {/* About Modal */}
+      <AboutModal 
+        isOpen={showAboutModal} 
+        onClose={() => setShowAboutModal(false)} 
+      />
     </div>
   );
 }
