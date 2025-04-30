@@ -1,5 +1,6 @@
 import { useContext, useState, useEffect } from 'react';
 import { GameContext } from '../context/GameContext';
+import { LanguageContext } from '../context/LanguageContext';
 import { X, Award, Clock, TrendingUp, Trophy } from 'lucide-react';
 
 export default function StatsModal({ isOpen, onClose }) {
@@ -11,6 +12,8 @@ export default function StatsModal({ isOpen, onClose }) {
     hydration, 
     isAlive
   } = useContext(GameContext);
+  
+  const { t } = useContext(LanguageContext);
 
   // State for the current tip with 3-second delay
   const [currentTip, setCurrentTip] = useState("");
@@ -93,8 +96,8 @@ export default function StatsModal({ isOpen, onClose }) {
   const formatPlayTime = (minutes) => {
     const hours = Math.floor(minutes / 60);
     const mins = minutes % 60;
-    if (hours === 0) return `${mins} minutes`;
-    return `${hours} hour${hours !== 1 ? 's' : ''} ${mins} minute${mins !== 1 ? 's' : ''}`;
+    if (hours === 0) return `${mins} ${mins === 1 ? t('minute') : t('minutes')}`;
+    return `${hours} ${hours === 1 ? t('hour') : t('hours')} ${mins} ${mins === 1 ? t('minute') : t('minutes')}`;
   };
   
   // Load game stats from localStorage
@@ -160,7 +163,7 @@ export default function StatsModal({ isOpen, onClose }) {
         <div className="bg-amber-50 dark:bg-gray-800 rounded-xl shadow-lg max-w-md w-full max-h-[90vh] overflow-y-auto transition-colors duration-300">
           {/* Header */}
           <div className="flex justify-between items-center p-4 border-b border-amber-200 dark:border-gray-700">
-            <h2 className="text-xl font-bold text-amber-800 dark:text-amber-300">Game Statistics</h2>
+            <h2 className="text-xl font-bold text-amber-800 dark:text-amber-300">{t('statsModal.title')}</h2>
             <button 
               onClick={onClose}
               className="p-1 rounded-full hover:bg-amber-200 dark:hover:bg-gray-700 transition-colors"
@@ -176,17 +179,17 @@ export default function StatsModal({ isOpen, onClose }) {
             <section>
               <h3 className="text-lg font-semibold text-amber-800 dark:text-amber-300 mb-3 flex items-center">
                 <Trophy size={20} className="mr-2" />
-                Records
+                {t('statsModal.records')}
               </h3>
               
               <div className="space-y-2">
                 <div className="flex justify-between items-center">
-                  <span className="text-gray-700 dark:text-gray-300">Games Played:</span>
+                  <span className="text-gray-700 dark:text-gray-300">{t('statsModal.gamesPlayed')}:</span>
                   <span className="font-medium text-amber-800 dark:text-amber-300">{gameStats.gamesPlayed}</span>
                 </div>
                 <div className="flex justify-between items-center">
-                  <span className="text-gray-700 dark:text-gray-300">Longest Capybara Life:</span>
-                  <span className="font-medium text-amber-800 dark:text-amber-300">{gameStats.recordAge.toFixed(1)} days</span>
+                  <span className="text-gray-700 dark:text-gray-300">{t('statsModal.longestLife')}:</span>
+                  <span className="font-medium text-amber-800 dark:text-amber-300">{gameStats.recordAge.toFixed(1)} {t('days')}</span>
                 </div>
               </div>
             </section>
@@ -195,16 +198,16 @@ export default function StatsModal({ isOpen, onClose }) {
             <section>
               <h3 className="text-lg font-semibold text-amber-800 dark:text-amber-300 mb-3 flex items-center">
                 <TrendingUp size={20} className="mr-2" />
-                Current Game
+                {t('statsModal.current')}
               </h3>
               
               <div className="space-y-2">
                 <div className="flex justify-between items-center">
-                  <span className="text-gray-700 dark:text-gray-300">Age in Hours:</span>
-                  <span className="font-medium text-amber-800 dark:text-amber-300">{(age * 24).toFixed(1)} hours</span>
+                  <span className="text-gray-700 dark:text-gray-300">{t('statsModal.ageInHours')}:</span>
+                  <span className="font-medium text-amber-800 dark:text-amber-300">{(age * 24).toFixed(1)} {t('hours')}</span>
                 </div>
                 <div className="flex justify-between items-center">
-                  <span className="text-gray-700 dark:text-gray-300">Overall Wellness:</span>
+                  <span className="text-gray-700 dark:text-gray-300">{t('stats.wellness')}:</span>
                   <span className="font-medium text-amber-800 dark:text-amber-300">{overallWellness}%</span>
                 </div>
               </div>
@@ -214,12 +217,12 @@ export default function StatsModal({ isOpen, onClose }) {
             <section>
               <h3 className="text-lg font-semibold text-amber-800 dark:text-amber-300 mb-3 flex items-center">
                 <Clock size={20} className="mr-2" />
-                Session Info
+                {t('statsModal.session')}
               </h3>
               
               <div className="space-y-2">
                 <div className="flex justify-between items-center">
-                  <span className="text-gray-700 dark:text-gray-300">Current Play Session:</span>
+                  <span className="text-gray-700 dark:text-gray-300">{t('statsModal.playSession')}:</span>
                   <span className="font-medium text-amber-800 dark:text-amber-300">{formatPlayTime(gameStats.playTime)}</span>
                 </div>
               </div>
@@ -227,7 +230,7 @@ export default function StatsModal({ isOpen, onClose }) {
             
             {/* Capybara Facts with 3-second rotation */}
             <section className="bg-amber-100 dark:bg-gray-700 p-3 rounded-lg">
-              <h3 className="text-md font-semibold text-amber-800 dark:text-amber-300 mb-2">Capy Fun Fact</h3>
+              <h3 className="text-md font-semibold text-amber-800 dark:text-amber-300 mb-2">{t('statsModal.factTitle')}</h3>
               <p className="text-sm text-amber-700 dark:text-amber-200">
                 {currentTip || "Loading fun fact..."}
               </p>

@@ -69,7 +69,7 @@ The capybara has four main stats that decrease over time:
 - **Energy**: Let your pet sleep to recover energy
 - **Hydration**: Give water to increase this stat
 
-If any stat reaches zero, your capybara will pass away and you'll need to start over.
+If any stat reaches zero, your capybara will run away and you'll need to start over.
 
 ## Mobile Installation
 
@@ -87,4 +87,4 @@ MIT
 
 ## Credits
 
-Created with ❤️ by [Your Name]
+Created with ❤️ by Vadim Khafizov

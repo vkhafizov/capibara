@@ -8,11 +8,11 @@ export const LanguageContext = createContext();
 export function LanguageProvider({ children }) {
   // Available languages
   const availableLanguages = {
+    ba: 'Башҡортса',
     en: 'English',
     ru: 'Русский',
-    tr: 'Türkçe',
     tt: 'Татарча',
-    ba: 'Башҡортса'
+    tr: 'Türkçe'
   };
   
   // Default to English, but check localStorage first

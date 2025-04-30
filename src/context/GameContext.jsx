@@ -1,11 +1,17 @@
 // src/context/GameContext.jsx
-import { createContext, useState, useEffect } from 'react';
+import { createContext, useState, useEffect, useContext } from 'react';
 import { loadGameState, saveGameState } from '../utils/storageUtils';
 import { Heart } from 'lucide-react';
+import { LanguageContext } from './LanguageContext';
 
 export const GameContext = createContext();
 
 export function GameProvider({ children }) {
+  // Access translation context
+  const contextValue = useContext(LanguageContext);
+  // Make t function always available, even if LanguageContext hasn't been initialized yet
+  const t = contextValue?.t || (key => key);
+  
   // Pet stats with initial values
   const [hunger, setHunger] = useState(80);
   const [happiness, setHappiness] = useState(80);
@@ -66,6 +72,11 @@ export function GameProvider({ children }) {
         } else {
           // Recover energy while sleeping
           setEnergy(prev => Math.min(100, prev + 1.5));
+          // Decrease other stats at a slower rate during sleep
+          setHunger(prev => Math.max(0, prev - 0.1));
+          setHappiness(prev => Math.max(0, prev - 0.1));
+          setHydration(prev => Math.max(0, prev - 0.2));
+          
         }
         
         // Increase age every 20 seconds
@@ -76,7 +87,7 @@ export function GameProvider({ children }) {
           setIsAlive(false);
           
           // Send death notification
-          sendNotification('Oh no!', 'Your capybara has passed away. 😢');
+          sendNotification(t('notifications.deadTitle'), t('notifications.deadMessage'));
         }
         
         // Send warning notifications
@@ -85,7 +96,7 @@ export function GameProvider({ children }) {
     }, 1000);
     
     return () => clearInterval(gameTimer);
-  }, [hunger, happiness, energy, hydration, isSleeping, isAlive]);
+  }, [hunger, happiness, energy, hydration, isSleeping, isAlive, t]);
   
   // Send notifications if stats are critically low
   const checkAndSendWarningNotifications = () => {
@@ -94,13 +105,13 @@ export function GameProvider({ children }) {
     if (now - lastNotification < 2 * 60 * 1000) return;
     
     if (hunger <= 15) {
-      sendNotification('Your capybara is starving!', 'Feed your pet soon!');
+      sendNotification(t('notifications.hungryTitle'), t('notifications.hungryMessage'));
     } else if (happiness <= 15) {
-      sendNotification('Your capybara is sad!', 'Play with your pet!');
+      sendNotification(t('notifications.sadTitle'), t('notifications.sadMessage'));
     } else if (energy <= 15) {
-      sendNotification('Your capybara is exhausted!', 'Let your pet sleep!');
+      sendNotification(t('notifications.tiredTitle'), t('notifications.tiredMessage'));
     } else if (hydration <= 15) {
-      sendNotification('Your capybara is dehydrated!', 'Give your pet water!');
+      sendNotification(t('notifications.thirstyTitle'), t('notifications.thirstyMessage'));
     }
   };
   
@@ -188,16 +199,16 @@ export function GameProvider({ children }) {
   
   // Get status message based on pet state
   const getStatusMessage = () => {
-    if (!isAlive) return "Your capybara has run away 😢";
-    if (isSleeping) return "Your capybara is sleeping... Zzz";
-    if (isEating) return "Your capybara is eating...";
-    if (isHydrating) return "Your capybara is taking a bath...";
-    if (isPlaying) return "Your capybara is playing...";
-    if (hunger < 20) return "Your capybara is hungry!";
-    if (happiness < 20) return "Your capybara is bored!";
-    if (energy < 20) return "Your capybara is tired!";
-    if (hydration < 20) return "Your capybara is thirsty!";
-    return "Your capybara is doing great!";
+    if (!isAlive) return t('status.dead');
+    if (isSleeping) return t('status.sleeping');
+    if (isEating) return t('status.eating');
+    if (isHydrating) return t('status.bathing');
+    if (isPlaying) return t('status.playing');
+    if (hunger < 20) return t('status.hungry');
+    if (happiness < 20) return t('status.bored');
+    if (energy < 20) return t('status.tired');
+    if (hydration < 20) return t('status.thirsty');
+    return t('status.great');
   };
   
   const statusMessage = getStatusMessage();
@@ -227,7 +238,6 @@ export function GameProvider({ children }) {
       {children}
     </GameContext.Provider>
   );
-  
 }
 
 // Update game stats when starting a new game

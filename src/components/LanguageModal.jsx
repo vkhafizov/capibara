@@ -17,17 +17,7 @@ export default function LanguageModal({ isOpen, onClose }) {
     onClose();
   };
   
-  // Get flag emoji for languages
-  const getLanguageFlag = (code) => {
-    const flags = {
-      en: '🇬🇧',
-      ru: '🇷🇺',
-      tr: '🇹🇷',
-      tt: '🇷🇺', // Using Russian flag (Tatarstan doesn't have unicode flag)
-      ba: '🇷🇺'  // Using Russian flag (Bashkortostan doesn't have unicode flag)
-    };
-    return flags[code] || '';
-  };
+ 
 
   return (
     <>
@@ -65,7 +55,7 @@ export default function LanguageModal({ isOpen, onClose }) {
                   }`}
                   onClick={() => handleLanguageChange(code)}
                 >
-                  <span className="text-2xl mr-3">{getLanguageFlag(code)}</span>
+
                   <span className={`text-lg ${
                     selectedLanguage === code
                       ? 'font-medium text-amber-800 dark:text-amber-300'

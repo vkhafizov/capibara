@@ -1,6 +1,10 @@
+import { useContext } from 'react';
 import { X } from 'lucide-react';
+import { LanguageContext } from '../context/LanguageContext';
 
 export default function AboutModal({ isOpen, onClose }) {
+  const { t } = useContext(LanguageContext);
+  
   if (!isOpen) return null;
 
   return (
@@ -16,7 +20,7 @@ export default function AboutModal({ isOpen, onClose }) {
         <div className="bg-amber-50 dark:bg-gray-800 rounded-xl shadow-xl max-w-md w-full max-h-[80vh] overflow-y-auto transition-colors duration-300">
           {/* Header */}
           <div className="flex justify-between items-center p-4 border-b border-amber-200 dark:border-gray-700">
-            <h2 className="text-xl font-bold text-amber-800 dark:text-amber-300">About Capy-gotchi</h2>
+            <h2 className="text-xl font-bold text-amber-800 dark:text-amber-300">{t('aboutModal.title')}</h2>
             <button 
               onClick={onClose}
               className="p-1 rounded-full hover:bg-amber-200 dark:hover:bg-gray-700 transition-colors"
@@ -29,40 +33,39 @@ export default function AboutModal({ isOpen, onClose }) {
           {/* Content */}
           <div className="p-4 space-y-4">
             <div>
-              <h3 className="text-lg font-semibold text-amber-800 dark:text-amber-300 mb-2">What is Capy-gotchi?</h3>
+              <h3 className="text-lg font-semibold text-amber-800 dark:text-amber-300 mb-2">{t('aboutModal.whatIs')}</h3>
               <p className="text-amber-700 dark:text-amber-200">
-                Capy-gotchi is a virtual pet game where you care for your own capybara!
-                Keep your pet happy and healthy by monitoring and maintaining its vital stats.
+                {t('aboutModal.description')}
               </p>
             </div>
             
             <div>
-              <h3 className="text-lg font-semibold text-amber-800 dark:text-amber-300 mb-2">How to Play</h3>
+              <h3 className="text-lg font-semibold text-amber-800 dark:text-amber-300 mb-2">{t('aboutModal.howTo')}</h3>
               <ul className="list-disc pl-5 text-amber-700 dark:text-amber-200 space-y-2">
-                <li><strong>Feed</strong> your capybara to maintain hunger levels</li>
-                <li><strong>Play</strong> with your pet to keep happiness high</li>
-                <li><strong>Water</strong> your pet to prevent dehydration</li>
-                <li><strong>Sleep</strong> toggle to restore energy</li>
+                <li><strong>{t('actions.feed')}</strong> {t('aboutModal.feedDesc')}</li>
+                <li><strong>{t('actions.play')}</strong> {t('aboutModal.playDesc')}</li>
+                <li><strong>{t('actions.water')}</strong> {t('aboutModal.waterDesc')}</li>
+                <li><strong>{t('actions.sleep')}</strong> {t('aboutModal.sleepDesc')}</li>
               </ul>
               <p className="mt-2 text-amber-700 dark:text-amber-200">
-                If any stat reaches zero, your capybara will pass away and you'll need to start over.
+                {t('aboutModal.warning')}
               </p>
             </div>
             
             <div>
-              <h3 className="text-lg font-semibold text-amber-800 dark:text-amber-300 mb-2">Capybara Fun Facts</h3>
+              <h3 className="text-lg font-semibold text-amber-800 dark:text-amber-300 mb-2">{t('aboutModal.funFacts')}</h3>
               <ul className="list-disc pl-5 text-amber-700 dark:text-amber-200 space-y-1">
-                <li>Capybaras are the largest rodents in the world</li>
-                <li>They're semi-aquatic and excellent swimmers</li>
-                <li>Capybaras are highly social animals</li>
-                <li>They can sleep in water with just their noses above the surface</li>
-                <li>They're known for being friendly with other animals</li>
+                <li>{t('aboutModal.fact1')}</li>
+                <li>{t('aboutModal.fact2')}</li>
+                <li>{t('aboutModal.fact3')}</li>
+                <li>{t('aboutModal.fact4')}</li>
+                <li>{t('aboutModal.fact5')}</li>
               </ul>
             </div>
             
             <div className="pt-2 border-t border-amber-200 dark:border-gray-700">
               <p className="text-center text-sm text-amber-600 dark:text-amber-400">
-                Version 1.0.0 • Created with ❤️
+                Version 1.0.0 • {t('aboutModal.footer')}
               </p>
             </div>
           </div>
