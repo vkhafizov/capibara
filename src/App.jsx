@@ -2,6 +2,7 @@ import { useContext, useEffect } from 'react';
 import CapybaraDisplay from './components/CapybaraDisplay';
 import StatBar from './components/StatBar';
 import ActionButton from './components/ActionButton';
+import BurgerMenu from './components/BurgerMenu';
 import { GameContext } from './context/GameContext';
 import { Cookie, Gamepad2, Droplets, Moon, Heart } from 'lucide-react';
 
@@ -26,6 +27,9 @@ function App() {
         <h1 className="text-3xl font-bold text-amber-800">Capy-gotchi</h1>
         <p className="text-amber-600">Age: {age.toFixed(1)} days</p>
       </div>
+      
+      {/* Burger Menu */}
+      <BurgerMenu />
       
       {/* Capybara Display */}
       <div className="flex-grow flex flex-col items-center justify-center w-full relative">
