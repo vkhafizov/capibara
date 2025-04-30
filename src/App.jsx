@@ -29,7 +29,7 @@ function App() {
       
       {/* Capybara Display */}
       <div className="flex-grow flex flex-col items-center justify-center w-full relative">
-        <CapybaraDisplay isAlive={isAlive} isSleeping={isSleeping} />
+        <CapybaraDisplay />
         
         <p className="text-xl mt-4 text-center font-medium text-amber-700">
           {statusMessage}
@@ -37,7 +37,7 @@ function App() {
         
         {/* Stats Bars */}
         {isAlive && (
-          <div className="w-full max-w-md mt-6 space-y-2">
+          <div className="w-full max-w-md mt-6 mb-6 space-y-2">
             <StatBar label="Hunger" value={hunger} icon={<Cookie size={18} />} color="amber" />
             <StatBar label="Happiness" value={happiness} icon={<Heart size={18} />} color="red" />
             <StatBar label="Energy" value={energy} icon={<Gamepad2 size={18} />} color="green" />

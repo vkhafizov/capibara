@@ -28,6 +28,7 @@ export default defineConfig({
       }
     })
   ],
+  assetsInclude: ['**/*.png', '**/*.PNG', '**/*.jpg', '**/*.jpeg', '**/*.gif', '**/*.svg'],
   server: {
     port: 3000
   },

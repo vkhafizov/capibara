@@ -14,6 +14,9 @@ export function GameProvider({ children }) {
   const [age, setAge] = useState(0);
   const [isSleeping, setIsSleeping] = useState(false);
   const [isAlive, setIsAlive] = useState(true);
+  const [isEating, setIsEating] = useState(false);
+  const [isHydrating, setIsHydrating] = useState(false);
+  const [isPlaying, setIsPlaying] = useState(false);
   const [lastNotification, setLastNotification] = useState(0);
   
   // Load saved game on initial mount
@@ -27,6 +30,9 @@ export function GameProvider({ children }) {
       setAge(savedGame.age);
       setIsSleeping(savedGame.isSleeping);
       setIsAlive(savedGame.isAlive);
+      if (savedGame.isEating !== undefined) setIsEating(savedGame.isEating);
+      if (savedGame.isHydrating !== undefined) setIsHydrating(savedGame.isHydrating);
+      if (savedGame.isPlaying !== undefined) setIsPlaying(savedGame.isPlaying);
     }
   }, []);
   
@@ -39,9 +45,12 @@ export function GameProvider({ children }) {
       hydration,
       age,
       isSleeping,
-      isAlive
+      isAlive,
+      isEating,
+      isHydrating,
+      isPlaying
     });
-  }, [hunger, happiness, energy, hydration, age, isSleeping, isAlive]);
+  }, [hunger, happiness, energy, hydration, age, isSleeping, isAlive, isEating, isHydrating, isPlaying]);
   
   // Main game timer
   useEffect(() => {
@@ -105,31 +114,49 @@ export function GameProvider({ children }) {
   
   // Game actions
   const feed = () => {
-    if (isAlive && !isSleeping) {
-      setHunger(prev => Math.min(100, prev + 15));
-      setEnergy(prev => Math.max(0, prev - 5));
+    if (isAlive && !isSleeping && !isEating && !isHydrating && !isPlaying) {
+      setIsEating(true);
       playSound('eat');
+      
+      // Show eating animation for 2 seconds
+      setTimeout(() => {
+        setHunger(prev => Math.min(100, prev + 15));
+        setEnergy(prev => Math.max(0, prev - 5));
+        setIsEating(false);
+      }, 2000);
     }
   };
   
   const play = () => {
-    if (isAlive && !isSleeping) {
-      setHappiness(prev => Math.min(100, prev + 15));
-      setEnergy(prev => Math.max(0, prev - 10));
-      setHunger(prev => Math.max(0, prev - 5));
-      setHydration(prev => Math.max(0, prev - 5));
+    if (isAlive && !isSleeping && !isEating && !isHydrating && !isPlaying) {
+      setIsPlaying(true);
       playSound('play');
+      
+      // Show playing animation for 2 seconds
+      setTimeout(() => {
+        setHappiness(prev => Math.min(100, prev + 15));
+        setEnergy(prev => Math.max(0, prev - 10));
+        setHunger(prev => Math.max(0, prev - 5));
+        setHydration(prev => Math.max(0, prev - 5));
+        setIsPlaying(false);
+      }, 2000);
     }
   };
   
   const giveWater = () => {
-    if (isAlive && !isSleeping) {
-      setHydration(prev => Math.min(100, prev + 20));
+    if (isAlive && !isSleeping && !isEating && !isHydrating && !isPlaying) {
+      setIsHydrating(true);
+      
+      // Show hydrating animation for 2 seconds
+      setTimeout(() => {
+        setHydration(prev => Math.min(100, prev + 20));
+        setIsHydrating(false);
+      }, 2000);
     }
   };
   
   const toggleSleep = () => {
-    if (isAlive) {
+    if (isAlive && !isEating && !isHydrating && !isPlaying) {
       setIsSleeping(prev => !prev);
       playSound('sleep');
     }
@@ -143,6 +170,9 @@ export function GameProvider({ children }) {
     setAge(0);
     setIsSleeping(false);
     setIsAlive(true);
+    setIsEating(false);
+    setIsHydrating(false);
+    setIsPlaying(false);
   };
   
   // Play sound effect
@@ -160,6 +190,9 @@ export function GameProvider({ children }) {
   const getStatusMessage = () => {
     if (!isAlive) return "Your capybara has passed away 😢";
     if (isSleeping) return "Your capybara is sleeping... Zzz";
+    if (isEating) return "Your capybara is eating...";
+    if (isHydrating) return "Your capybara is taking a bath...";
+    if (isPlaying) return "Your capybara is playing...";
     if (hunger < 20) return "Your capybara is hungry!";
     if (happiness < 20) return "Your capybara is bored!";
     if (energy < 20) return "Your capybara is tired!";
@@ -178,6 +211,9 @@ export function GameProvider({ children }) {
     age,
     isSleeping,
     isAlive,
+    isEating,
+    isHydrating,
+    isPlaying,
     statusMessage,
     feed,
     play,
