@@ -157,16 +157,16 @@ export default function StatsModal({ isOpen, onClose }) {
       
       {/* Modal */}
       <div className="fixed inset-0 flex items-center justify-center z-50 p-4">
-        <div className="bg-amber-50 rounded-xl shadow-lg max-w-md w-full max-h-[90vh] overflow-y-auto">
+        <div className="bg-amber-50 dark:bg-gray-800 rounded-xl shadow-lg max-w-md w-full max-h-[90vh] overflow-y-auto transition-colors duration-300">
           {/* Header */}
-          <div className="flex justify-between items-center p-4 border-b border-amber-200">
-            <h2 className="text-xl font-bold text-amber-800">Game Statistics</h2>
+          <div className="flex justify-between items-center p-4 border-b border-amber-200 dark:border-gray-700">
+            <h2 className="text-xl font-bold text-amber-800 dark:text-amber-300">Game Statistics</h2>
             <button 
               onClick={onClose}
-              className="p-1 rounded-full hover:bg-amber-200"
+              className="p-1 rounded-full hover:bg-amber-200 dark:hover:bg-gray-700 transition-colors"
               aria-label="Close"
             >
-              <X size={24} />
+              <X size={24} className="text-amber-800 dark:text-amber-300" />
             </button>
           </div>
           
@@ -174,61 +174,61 @@ export default function StatsModal({ isOpen, onClose }) {
           <div className="p-5 space-y-4">
             {/* Records Section */}
             <section>
-              <h3 className="text-lg font-semibold text-amber-800 mb-3 flex items-center">
+              <h3 className="text-lg font-semibold text-amber-800 dark:text-amber-300 mb-3 flex items-center">
                 <Trophy size={20} className="mr-2" />
                 Records
               </h3>
               
               <div className="space-y-2">
                 <div className="flex justify-between items-center">
-                  <span className="text-gray-700">Games Played:</span>
-                  <span className="font-medium">{gameStats.gamesPlayed}</span>
+                  <span className="text-gray-700 dark:text-gray-300">Games Played:</span>
+                  <span className="font-medium text-amber-800 dark:text-amber-300">{gameStats.gamesPlayed}</span>
                 </div>
                 <div className="flex justify-between items-center">
-                  <span className="text-gray-700">Longest Capybara Life:</span>
-                  <span className="font-medium">{gameStats.recordAge.toFixed(1)} days</span>
+                  <span className="text-gray-700 dark:text-gray-300">Longest Capybara Life:</span>
+                  <span className="font-medium text-amber-800 dark:text-amber-300">{gameStats.recordAge.toFixed(1)} days</span>
                 </div>
               </div>
             </section>
             
             {/* Current Game Stats */}
             <section>
-              <h3 className="text-lg font-semibold text-amber-800 mb-3 flex items-center">
+              <h3 className="text-lg font-semibold text-amber-800 dark:text-amber-300 mb-3 flex items-center">
                 <TrendingUp size={20} className="mr-2" />
                 Current Game
               </h3>
               
               <div className="space-y-2">
                 <div className="flex justify-between items-center">
-                  <span className="text-gray-700">Age in Hours:</span>
-                  <span className="font-medium">{(age * 24).toFixed(1)} hours</span>
+                  <span className="text-gray-700 dark:text-gray-300">Age in Hours:</span>
+                  <span className="font-medium text-amber-800 dark:text-amber-300">{(age * 24).toFixed(1)} hours</span>
                 </div>
                 <div className="flex justify-between items-center">
-                  <span className="text-gray-700">Overall Wellness:</span>
-                  <span className="font-medium">{overallWellness}%</span>
+                  <span className="text-gray-700 dark:text-gray-300">Overall Wellness:</span>
+                  <span className="font-medium text-amber-800 dark:text-amber-300">{overallWellness}%</span>
                 </div>
               </div>
             </section>
             
             {/* Session Stats */}
             <section>
-              <h3 className="text-lg font-semibold text-amber-800 mb-3 flex items-center">
+              <h3 className="text-lg font-semibold text-amber-800 dark:text-amber-300 mb-3 flex items-center">
                 <Clock size={20} className="mr-2" />
                 Session Info
               </h3>
               
               <div className="space-y-2">
                 <div className="flex justify-between items-center">
-                  <span className="text-gray-700">Current Play Session:</span>
-                  <span className="font-medium">{formatPlayTime(gameStats.playTime)}</span>
+                  <span className="text-gray-700 dark:text-gray-300">Current Play Session:</span>
+                  <span className="font-medium text-amber-800 dark:text-amber-300">{formatPlayTime(gameStats.playTime)}</span>
                 </div>
               </div>
             </section>
             
             {/* Capybara Facts with 3-second rotation */}
-            <section className="bg-amber-100 p-3 rounded-lg">
-              <h3 className="text-md font-semibold text-amber-800 mb-2">Capy Fun Fact</h3>
-              <p className="text-sm text-amber-700">
+            <section className="bg-amber-100 dark:bg-gray-700 p-3 rounded-lg">
+              <h3 className="text-md font-semibold text-amber-800 dark:text-amber-300 mb-2">Capy Fun Fact</h3>
+              <p className="text-sm text-amber-700 dark:text-amber-200">
                 {currentTip || "Loading fun fact..."}
               </p>
             </section>

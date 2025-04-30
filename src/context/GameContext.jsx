@@ -188,7 +188,7 @@ export function GameProvider({ children }) {
   
   // Get status message based on pet state
   const getStatusMessage = () => {
-    if (!isAlive) return "Your capybara has passed away 😢";
+    if (!isAlive) return "Your capybara has run away 😢";
     if (isSleeping) return "Your capybara is sleeping... Zzz";
     if (isEating) return "Your capybara is eating...";
     if (isHydrating) return "Your capybara is taking a bath...";
@@ -227,4 +227,30 @@ export function GameProvider({ children }) {
       {children}
     </GameContext.Provider>
   );
+  
 }
+
+// Update game stats when starting a new game
+const savedStats = localStorage.getItem('capy_game_stats');
+if (savedStats) {
+  try {
+    const stats = JSON.parse(savedStats);
+    stats.gamesPlayed += 1;
+    localStorage.setItem('capy_game_stats', JSON.stringify(stats));
+  } catch (error) {
+    // If there's an error, initialize with default values
+    localStorage.setItem('capy_game_stats', JSON.stringify({
+      gamesPlayed: 1,
+      recordAge: 0
+    }));
+  }
+} else {
+  // First game ever
+  localStorage.setItem('capy_game_stats', JSON.stringify({
+    gamesPlayed: 1,
+    recordAge: 0
+  }));
+}
+
+// Reset session start time
+localStorage.setItem('session_start_time', Date.now().toString());

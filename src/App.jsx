@@ -4,6 +4,7 @@ import StatBar from './components/StatBar';
 import ActionButton from './components/ActionButton';
 import BurgerMenu from './components/BurgerMenu';
 import { GameContext } from './context/GameContext';
+import { ThemeContext } from './context/ThemeContext';
 import { Cookie, Gamepad2, Droplets, Moon, Heart } from 'lucide-react';
 
 function App() {
@@ -12,6 +13,8 @@ function App() {
     isSleeping, isAlive, statusMessage,
     feed, play, giveWater, toggleSleep, resetGame
   } = useContext(GameContext);
+  
+  const { isDarkMode } = useContext(ThemeContext);
 
   // Request notification permission on app load
   useEffect(() => {
@@ -21,11 +24,11 @@ function App() {
   }, []);
 
   return (
-    <div className="flex flex-col items-center justify-between h-screen bg-amber-50 p-6 touch-manipulation">
+    <div className="flex flex-col items-center justify-between h-screen bg-amber-50 dark:bg-gray-900 p-6 touch-manipulation transition-colors duration-300">
       {/* Header */}
       <div className="w-full text-center mb-4">
-        <h1 className="text-3xl font-bold text-amber-800">Capy-gotchi</h1>
-        <p className="text-amber-600">Age: {age.toFixed(1)} days</p>
+        <h1 className="text-3xl font-bold text-amber-800 dark:text-amber-400">Capy-gotchi</h1>
+        <p className="text-amber-600 dark:text-amber-300">Age: {age.toFixed(1)} days</p>
       </div>
       
       {/* Burger Menu */}
@@ -35,7 +38,7 @@ function App() {
       <div className="flex-grow flex flex-col items-center justify-center w-full relative">
         <CapybaraDisplay />
         
-        <p className="text-xl mt-4 text-center font-medium text-amber-700">
+        <p className="text-xl mt-4 text-center font-medium text-amber-700 dark:text-amber-300">
           {statusMessage}
         </p>
         
@@ -86,7 +89,7 @@ function App() {
         ) : (
           <button 
             onClick={resetGame}
-            className="col-span-2 bg-purple-600 hover:bg-purple-700 text-white py-3 px-4 rounded-xl font-medium"
+            className="col-span-2 bg-purple-600 hover:bg-purple-700 dark:bg-purple-700 dark:hover:bg-purple-800 text-white py-3 px-4 rounded-xl font-medium transition-colors"
           >
             Restart Game
           </button>

@@ -1,5 +1,6 @@
 import { useContext } from 'react';
 import { GameContext } from '../context/GameContext';
+import { ThemeContext } from '../context/ThemeContext';
 
 export default function CapybaraDisplay() {
   const { 
@@ -13,6 +14,8 @@ export default function CapybaraDisplay() {
     isHydrating,
     isPlaying
   } = useContext(GameContext);
+  
+  const { isDarkMode } = useContext(ThemeContext);
   
   // Determine mood based on stats
   const getMood = () => {
@@ -32,6 +35,8 @@ export default function CapybaraDisplay() {
   
   // Helper to get the right image based on mood
   const getCapyImageSrc = () => {
+    // For dark mode, we could potentially use different images
+    // But for now, we'll use the same images regardless of theme
     switch(mood) {
       case 'sleeping':
         return './src/assets/images/capy-sleep.png';
@@ -62,7 +67,7 @@ export default function CapybaraDisplay() {
           <img 
             src={getCapyImageSrc()} 
             alt={`Capybara ${mood}`} 
-            className="w-64 h-64 object-contain"
+            className={`w-64 h-64 object-contain ${isDarkMode ? 'filter brightness-90' : ''}`}
           />
           
           {/* Additional effects based on state */}
